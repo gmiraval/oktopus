@@ -1,0 +1,31 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: oktopus-cert-letsencrypt-prod
+  namespace: oktopus
+spec:
+  secretName: mqttsoktopus-cert-letsencrypt-prod
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  dnsNames:
+    - mqttsoktopus.kube.cablevision-labs.com.ar
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: mqtt-ingress
+  namespace: oktopus
+spec:
+  entryPoints:
+    - mqtts
+  routes:
+    - match: HostSNI(`mqttsoktopus.kube.cablevision-labs.com.ar`)
+      services:
+        - name: mqtt-svc
+          port: 1883
+          namespace: oktopus 
+  tls:
+    secretName: mqttsoktopus-cert-letsencrypt-prod  # Nombre del Secret donde se almacenarán los certificado
+    passthrough: false
+
