@@ -27,7 +27,7 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: NATS_URL
-              value: "nats://nats:4222"
+              value: "nats://nats.oktopus:4222"
             - name: NATS_NAME
               value: "adapter"
             - name: NATS_VERIFY_CERTIFICATES
