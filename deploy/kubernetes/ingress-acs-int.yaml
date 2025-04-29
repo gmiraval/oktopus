@@ -1,0 +1,30 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: acsintoktopus-cert-letsencrypt-prod
+  namespace: oktopus
+spec:
+  secretName: acsintoktopus-cert-letsencrypt-prod
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  dnsNames:
+    - acsoktopus.int.kube.cablevision-labs.com.ar
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: acs-int-ingress
+  namespace: oktopus
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`acsoktopus.int.kube.cablevision-labs.com.ar`)
+      kind: Rule
+      services:
+        - name: acs-svc
+          port: 9292
+
+  tls:
+    secretName: acsintktopus-cert-letsencrypt-prod 
