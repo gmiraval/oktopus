@@ -39,6 +39,15 @@ func (h *Handler) CwmpHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Server", "Oktopus "+Version)
 
 	if messageType != "Inform" {
+		/*codigo modificado que no pide cookie*/
+		sn := extractSerialNumberFromSoapBody(r.Body)
+		    if cpe, exists = h.Cpes[serialNumber]; !exists {
+                       log.Printf("CPE with serial number %s not found", serialNumber)
+                    } else {
+                       log.Printf("CPE with serial number %s found", serialNumber)
+                    }
+
+		/*codigo original
 		if cookie, err := r.Cookie("oktopus"); err == nil {
 			if cpe, exists = h.Cpes[cookie.Value]; !exists {
 				log.Printf("CPE with serial number %s not found", cookie.Value)
@@ -49,6 +58,7 @@ func (h *Handler) CwmpHandler(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(401)
 			return
 		}
+		*/
 	}
 
 	if messageType == "Inform" {

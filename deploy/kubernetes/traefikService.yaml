@@ -1,0 +1,16 @@
+apiVersion: traefik.io/v1alpha1
+kind: TraefikService
+metadata:
+  name: acs-sticky
+  namespace: oktopus
+spec:
+  weighted:
+    services:
+      - name: acs-svc
+        port: 9292
+    sticky:
+      cookie:
+        name: oktopus
+        httpOnly: true
+        secure: true
+

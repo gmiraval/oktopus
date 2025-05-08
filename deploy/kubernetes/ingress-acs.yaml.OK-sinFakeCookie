@@ -27,4 +27,4 @@ spec:
           port: 9292
 
   tls:
-    secretName: acsoktopus-cert-letsencrypt-prod 
+    secretName: acsktopus-cert-letsencrypt-prod 

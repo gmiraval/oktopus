@@ -32,6 +32,8 @@ spec:
               value: "adapter"
             - name: NATS_VERIFY_CERTIFICATES
               value: "false"
+            - name: CWMP_DEBUG
+              value: "true"
 ---
 apiVersion: v1
 kind: Service

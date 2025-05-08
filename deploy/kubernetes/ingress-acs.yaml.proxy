@@ -23,7 +23,7 @@ spec:
     - match: Host(`acsoktopus.kube.cablevision-labs.com.ar`)
       kind: Rule
       services:
-        - name: acs-svc
+        - name: mitmproxy-acs
           port: 9292
 
   tls:
