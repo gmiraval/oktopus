@@ -22,6 +22,7 @@ type SoapBody struct {
 	CWMPMessage CWMPMessage `xml:",any"`
 }
 
+
 type CWMPMessage struct {
 	XMLName xml.Name
 }

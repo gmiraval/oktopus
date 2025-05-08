@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: acs
+  namespace: oktopus
 spec:
   replicas: 1
   selector:
@@ -17,6 +18,7 @@ spec:
       containers:
         - name: acs
           image: oktopusp/acs:latest
+            #image: miravallesg/acs:v1.1
           resources:
             # requests:
             #   memory: 64Mi

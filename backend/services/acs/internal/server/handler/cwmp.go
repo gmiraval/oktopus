@@ -39,15 +39,6 @@ func (h *Handler) CwmpHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Server", "Oktopus "+Version)
 
 	if messageType != "Inform" {
-		/*codigo modificado que no pide cookie*/
-		sn := extractSerialNumberFromSoapBody(r.Body)
-		    if cpe, exists = h.Cpes[serialNumber]; !exists {
-                       log.Printf("CPE with serial number %s not found", serialNumber)
-                    } else {
-                       log.Printf("CPE with serial number %s found", serialNumber)
-                    }
-
-		/*codigo original
 		if cookie, err := r.Cookie("oktopus"); err == nil {
 			if cpe, exists = h.Cpes[cookie.Value]; !exists {
 				log.Printf("CPE with serial number %s not found", cookie.Value)
@@ -58,7 +49,6 @@ func (h *Handler) CwmpHandler(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(401)
 			return
 		}
-		*/
 	}
 
 	if messageType == "Inform" {
@@ -94,10 +84,12 @@ func (h *Handler) CwmpHandler(w http.ResponseWriter, r *http.Request) {
 
 		log.Printf("Received an Inform from device %s withEventCodes %s", addr, Inform.GetEvents())
 
+		/*no enviamos cookie en respuesta inform
 		expiration := time.Now().AddDate(0, 0, 1)
 
 		cookie := http.Cookie{Name: "oktopus", Value: sn, Expires: expiration}
 		http.SetCookie(w, &cookie)
+		*/
 		//data, _ := xml.Marshal(cwmp.InformResponse(envelope.Header.Id))
 		fmt.Fprintf(w, cwmp.InformResponse(envelope.Header.Id))
 
